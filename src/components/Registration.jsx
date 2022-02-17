@@ -17,12 +17,15 @@ const Registration = ({setData}) => {
         console.log()
         const correctEmail = (validateEmail(email))
         const correctPassword = password.length >=8 && validatePassword(password)
+
+        if (password !== "") {
         console.log("This is password " + password)
         console.log("This is repeated-password " +passwordRepeat)
+    }
 
-        if ((name.length >=2) && (surname.length >=3) && (password !== "") && correctPassword && (password === passwordRepeat) && correctEmail) {
+        if ((name.length >=2) && (surname.length >=3) && correctPassword && (password === passwordRepeat) && correctEmail) {
             console.log("it's validated!")
-            setValidated(true)
+            
             setButtonState(false)
             setData({name: name, surname: surname, email: email, password: password,  })
         }
@@ -32,8 +35,8 @@ const Registration = ({setData}) => {
         }
 
         if (name.length >=2) {
-
-        }
+            
+        } 
     }
     
     
@@ -87,14 +90,14 @@ const handleSubmit = (e) => {
 
   <Form.Group className="mb-3" controlId="formBasicPassword">
     <Form.Label>Password</Form.Label>
-    <Form.Control required type="password" placeholder="Password" onChange={formReady} />
+    <Form.Control required type="password" placeholder="Password" onKeyUp={formReady} />
     <Form.Text className="text-muted">
     Should contain at least 8 chars, 1 digit, 1 letter
     </Form.Text>
   </Form.Group>
   <Form.Group className="mb-3" controlId="formPasswordConfirm">
     <Form.Label>Password</Form.Label>
-    <Form.Control required type="password" placeholder="Confirm Password" onChange={formReady}/>
+    <Form.Control required type="password" placeholder="Confirm Password" onKeyUp={formReady}/>
     <Form.Text className="text-muted">
     Needs to be the same as Password
     </Form.Text>
