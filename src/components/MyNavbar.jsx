@@ -1,23 +1,32 @@
 import { Component } from 'react'
 import { Navbar, Nav, Container, Form, Button, FormControl} from 'react-bootstrap'
 import MyBadge from "./MyBadge"
+import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
-class MyNavbar extends Component {
-state = {
-  searchQuery: ""
-}
+const MyNavbar = (props) => {
 
-render() {
+const location = useLocation()
+const navigate = useNavigate()
+
   return (
   <Navbar collapseOnSelect expand='md' bg='light' variant='light'>
     <Container fluid>
-    <Navbar.Brand href='#' title="Home">Black Books <MyBadge content="New Stock!" color="black"/></Navbar.Brand>
+    <Navbar.Brand onClick={() => {
+              navigate('/')
+            }} className={
+                location.pathname === "/" ? " active" : ""} title="Home" style={{ cursor: 'pointer' }}>Black Books <MyBadge content="New Stock!" color="black"/></Navbar.Brand>
     <Navbar.Toggle aria-controls='responsive-navbar-nav' />
     <Navbar.Collapse id='responsive-navbar-nav'>
       <Nav className='me-auto'>
-        <Nav.Link href='#'>About</Nav.Link>
-        <Nav.Link href='#Latest'>Browse</Nav.Link>
+        <Nav.Link >About</Nav.Link>
+        <Nav.Link>Browse</Nav.Link>
+        <Nav.Link onClick={() => {
+              navigate('/registration')
+            }} className={
+                location.pathname === "/registration" ? " active" : ""} style={{ cursor: 'pointer' }}>Registration</Nav.Link>
       </Nav>
       <Form className="d-flex">
         <FormControl
@@ -25,7 +34,7 @@ render() {
           placeholder="Search"
           className="me-2"
           aria-label="Search"
-          onChange={(e) => this.props.handleSearch(e.target.value)}
+          onChange={(e) => props.handleSearch(e.target.value)}
         />
       </Form>
     </Navbar.Collapse>
@@ -33,7 +42,6 @@ render() {
   </Navbar>
  
 )
-}
 }
 
 export default MyNavbar
