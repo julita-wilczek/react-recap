@@ -25,7 +25,7 @@ const Registration = ({setData}) => {
 
         if ((name.length >=2) && (surname.length >=3) && correctPassword && (password === passwordRepeat) && correctEmail) {
             console.log("it's validated!")
-            
+            setValidated(true)
             setButtonState(false)
             setData({name: name, surname: surname, email: email, password: password,  })
         }
