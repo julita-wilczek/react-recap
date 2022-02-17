@@ -1,24 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import MyNavbar from './components/MyNavbar';
+import MyFooter from './components/MyFooter';
+import BookList from './components/BookList'
+import fantasy from './data/fantasy.json'
+import { useState } from 'react';
+/*import horror from './data/horror.json'*/
+
 
 function App() {
+
+  const [search, setSearch] = useState("")
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <MyNavbar handleSearch = {setSearch}/>
+      <BookList search={search} books={fantasy}/>
+      <MyFooter />
+    </>
   );
 }
 
