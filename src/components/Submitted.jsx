@@ -3,7 +3,7 @@ const Submitted = ({data}) => {
     return (
     <Container className="my-5">
         <Row className="justify-content-center">
-        <Col sm={6}>
+        <Col sm={12} md={6}>
     <ListGroup>
   <h4>Here are your registration details:</h4>
   <ListGroup.Item><b>Name:</b> {data.name}</ListGroup.Item>

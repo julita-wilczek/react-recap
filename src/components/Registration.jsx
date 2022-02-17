@@ -1,20 +1,21 @@
-import {Container, Form, Button} from 'react-bootstrap'
+import {Container, Form, Button, Row, Col, Alert} from 'react-bootstrap'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
+
 
 const Registration = ({setData}) => {
 
     const [validated, setValidated] = useState(false);
     const [buttonState, setButtonState] = useState(true)
     const navigate = useNavigate()
+    const [wrong, setWrong] = useState(false)
 
-    const formReady = (event) => {
+    const formReady = () => {
         const name = document.getElementById("formName").value
         const surname = document.getElementById("formSurname").value
         const password = document.getElementById("formBasicPassword").value
         const passwordRepeat = document.getElementById("formPasswordConfirm").value
         const email = document.getElementById("formBasicEmail").value
-        console.log()
         const correctEmail = (validateEmail(email))
         const correctPassword = password.length >=8 && validatePassword(password)
 
@@ -34,9 +35,11 @@ const Registration = ({setData}) => {
             setButtonState(true)
         }
 
-        if (name.length >=2) {
-            
-        } 
+        if (name.length <2) {
+            setWrong(true)
+        } else {
+            setWrong(false)
+        }
     }
     
     
@@ -58,26 +61,31 @@ const Registration = ({setData}) => {
 const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    alert("All done!")
     setTimeout(navigate('/submitted'), 3000)
 }
 
 
     return (
-<Container>
+<Container className="my-5">
+<Row className="justify-content-center">
+<Col sm={12} md={6}>
 <Form noValidate validated={validated} onSubmit={(event) => handleSubmit(event)}>
 <Form.Group className="mb-3" controlId="formName">
     <Form.Label>Name</Form.Label>
     <Form.Control required type="text" placeholder="Name" onChange={formReady}/>
     <Form.Text className="text-muted">
-      Required, at least 2 chars
+      Required, at least 2 characters
     </Form.Text>
+    {wrong && (<Alert variant="danger">
+    Too short
+  </Alert>)}
+
   </Form.Group>
   <Form.Group className="mb-3" controlId="formSurname">
     <Form.Label>Surname</Form.Label>
     <Form.Control required type="text" placeholder="Surname" onChange={formReady} />
     <Form.Text className="text-muted">
-    Required, at least 3 chars
+    Required, at least 3 characters
     </Form.Text>
   </Form.Group>
   <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -92,7 +100,7 @@ const handleSubmit = (e) => {
     <Form.Label>Password</Form.Label>
     <Form.Control required type="password" placeholder="Password" onKeyUp={formReady} />
     <Form.Text className="text-muted">
-    Should contain at least 8 chars, 1 digit, 1 letter
+    Should contain at least 8 characters including 1 digit and 1 letter
     </Form.Text>
   </Form.Group>
   <Form.Group className="mb-3" controlId="formPasswordConfirm">
@@ -106,6 +114,8 @@ const handleSubmit = (e) => {
     Submit
   </Button>
 </Form>
+</Col>
+</Row>
 </Container>
     )
 }
